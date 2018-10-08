@@ -40,5 +40,10 @@ namespace UmsPay
         public string secretKey { get; set; }
 
         public string GetQrCodeUrl { get; set; }
+
+        /// <summary>
+        /// 支付结果通知url
+        /// </summary>
+        public string NotifyUrl { get; set; }
     }
 }

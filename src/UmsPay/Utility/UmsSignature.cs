@@ -7,7 +7,7 @@ namespace UmsPay.Utility
 {
     public class UmsSignature
     {
-        
+
         public static void Sign(IDictionary<string, string> reqData, string secretKey)
         {
             if (reqData == null || reqData.Count <= 0)
@@ -43,9 +43,29 @@ namespace UmsPay.Utility
 
 
 
-        public static bool Validate(Dictionary<string, string> resData)
+        public static bool Validate(Dictionary<string, string> resData, string sign, string secretKey)
         {
-            return false;
+            var list = new List<string>(resData.Keys);
+            list.Sort(StringComparer.Ordinal);
+
+            var sb = new StringBuilder();
+            foreach (var key in list)
+            {
+                sb.Append($"{key}={resData[key]}&");
+            }
+            var content = sb.Remove(sb.Length - 1, 1) + secretKey;
+            var bytes = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(content));
+            var sb2 = new StringBuilder();
+            foreach (var b in bytes)
+            {
+                sb2.Append(b.ToString("X2"));
+            }
+            var computedSign = sb2.ToString();
+            if (!sign.Equals(computedSign, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+            return true;
         }
 
 

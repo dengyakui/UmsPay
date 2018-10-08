@@ -1,14 +1,19 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using UmsPay;
+using UmsPay.Common;
+using UmsPay.Notify;
 using UmsPay.Request;
+using UmsPay.Response;
 using UmsPayTest.Models;
 
 namespace WebApplication1.Controllers
@@ -17,7 +22,7 @@ namespace WebApplication1.Controllers
     {
         private readonly UmsPayClient _client;
         private readonly UmsPayOptions _options;
-        public HomeController(UmsPayClient client,IOptions<UmsPayOptions> options)
+        public HomeController(UmsPayClient client, IOptions<UmsPayOptions> options)
         {
             _client = client;
             _options = options.Value;
@@ -31,20 +36,49 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public async Task<IActionResult> PayNotify()
         {
-            if (Request.HasFormContentType)
+            if (!Request.HasFormContentType)
             {
-                var formCollection = await Request.ReadFormAsync();
+                return BadRequest("参数错误");
             }
-            using (StreamReader reader=  new StreamReader(Request.Body,Encoding.UTF8))
-            {
-                var res = await reader.ReadToEndAsync();
-                if (string.IsNullOrEmpty(res))
-                {
-                    throw new Exception("response was empty");
-                }
 
+            var formCollection = await Request.ReadFormAsync();
+            if (formCollection == null || formCollection.Count <= 0)
+            {
+                throw new Exception("未解析到callback信息");
             }
-            return Ok();
+            var sign = formCollection["sign"].ToString();
+
+            var dict = new UmsPayDictionary();
+            foreach (var key in formCollection.Keys)
+            {
+                if (key != "sign")
+                {
+                    dict.Add(key, formCollection[key]);
+                }
+            }
+
+            // sign validation
+            if (!UmsPay.Utility.UmsSignature.Validate(dict, sign, _options.secretKey))
+            {
+                throw new Exception("签名校验失败");
+            }
+
+            // TODO: check if it is an repeat request and if is repeat we should return SUCCESS OR FAILED to terminate.
+
+
+            var billPayment = dict["billPayment"];
+            var str = JsonConvert.SerializeObject(dict);
+            var payResult = JsonConvert.DeserializeObject<PayResultNotify>(str);
+            payResult.Body = str;
+            payResult.billPaymentObj = JsonConvert.DeserializeObject<BillPayment>(billPayment);
+
+            if (payResult.billStatus != BillStatus.PAID)
+            {
+                return Content("FAILED");
+            }
+
+            return Content("SUCCESS");
+
         }
 
         [HttpGet]
@@ -58,8 +92,7 @@ namespace WebApplication1.Controllers
                 billNo = _options.msgSrcId + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "1234567890",
                 billDesc = "测试",
                 requestTimestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                returnUrl = Url.Action(nameof(PayResult)),
-                notifyUrl = ""
+                notifyUrl = _options.NotifyUrl
             };
             return View(req);
         }
@@ -83,7 +116,7 @@ namespace WebApplication1.Controllers
                 returnUrl = model.returnUrl
             };
             var res = await _client.ExecuteAsync(req);
-            if(string.IsNullOrWhiteSpace(res.errCode) && string.IsNullOrWhiteSpace(res.errMsg))
+            if (string.IsNullOrWhiteSpace(res.errCode) && string.IsNullOrWhiteSpace(res.errMsg))
             {
                 throw new Exception("请求失败:" + res.Body);
             }
@@ -94,13 +127,6 @@ namespace WebApplication1.Controllers
         public IActionResult QrCode(string code)
         {
             ViewBag.Code = code;
-            return View();
-        }
-
-
-
-        public IActionResult PayResult()
-        {
             return View();
         }
     }
