@@ -55,7 +55,7 @@ namespace WebApplication1.Controllers
             {
                 totalAmount = "1",
                 billDate = DateTime.Now.ToString("yyyy-MM-dd"),
-                billNo = _options.msgSrcId + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "1234567",
+                billNo = _options.msgSrcId + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "1234567890",
                 billDesc = "测试",
                 requestTimestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                 returnUrl = Url.Action(nameof(PayResult)),
