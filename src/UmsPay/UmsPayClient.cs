@@ -40,7 +40,7 @@ namespace UmsPay
                 if (string.IsNullOrEmpty(body)) throw new ArgumentNullException(nameof(body));
 
                 var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(body);
-                // TODO: validate signature
+                
                 T resp = default(T);
                 try
                 {

@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+@model QrCodePayViewModel
+
+
+<h2>二维码支付</h2>
+<form method="post" asp-action="index" enctype="application/x-www-form-urlencoded">
+    <div class="form-group">
+        <label asp-for="billNo"></label>
+        <input asp-for="billNo" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="billDate"></label>
+        <input asp-for="billDate" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="billDesc"></label>
+        <input asp-for="billDesc" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="totalAmount"></label>
+        <input asp-for="totalAmount" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="notifyUrl"></label>
+        <input asp-for="notifyUrl" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="returnUrl"></label>
+        <input asp-for="returnUrl" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="requestTimestamp"></label>
+        <input asp-for="requestTimestamp" class="form-control" />
+    </div>
+    <div>
+        <button class="btn btn-primary">生成二维码</button>
+    </div>
+</form>
+

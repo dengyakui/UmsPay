@@ -38,7 +38,7 @@ namespace WebApplication1
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
 
             app.Run(async (context) =>
