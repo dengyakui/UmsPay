@@ -9,5 +9,7 @@ namespace UmsPay.Abstract
         /// 获取所有的Key-Value形式的文本请求参数字典
         /// </summary>
         IDictionary<string, string> GetParameters();
+
+        string msgType { get; }
     }
 }

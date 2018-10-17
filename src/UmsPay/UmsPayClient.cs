@@ -28,8 +28,6 @@ namespace UmsPay
                 { "mid", _options.mid},
                 { "instMid", _options.instMid},
                 { "msgSrc", _options.msgSrc},
-                { "msgSrcId", _options.msgSrcId },
-                { "msgType", _options.msgType },
                 { "tid", _options.tid }
             };
             UmsSignature.Sign(txtParams, _options.secretKey);
@@ -39,7 +37,7 @@ namespace UmsPay
                 var body = await HttpClientUtility.DoPostAsync(client, _options.GetQrCodeUrl, content);
                 if (string.IsNullOrEmpty(body)) throw new ArgumentNullException(nameof(body));
 
-                var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(body);
+                //var dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(body);
                 
                 T resp = default(T);
                 try

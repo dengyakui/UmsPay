@@ -64,8 +64,6 @@ namespace WebApplication1.Controllers
             }
 
             // TODO: check if it is an repeat request and if is repeat we should return SUCCESS OR FAILED to terminate.
-
-
             var billPayment = dict["billPayment"];
             var str = JsonConvert.SerializeObject(dict);
             var payResult = JsonConvert.DeserializeObject<PayResultNotify>(str);
@@ -73,6 +71,19 @@ namespace WebApplication1.Controllers
             payResult.billPaymentObj = JsonConvert.DeserializeObject<BillPayment>(billPayment);
 
             if (payResult.billStatus != BillStatus.PAID)
+            {
+                return Content("FAILED");
+            }
+
+            var billQuery = new BillQueryRequest
+            {
+                billDate = payResult.billDate,
+                billNo = payResult.billNo,
+                requestTimestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+            };
+
+            var res = await _client.ExecuteAsync(billQuery);
+            if (res.billStatus != BillStatus.PAID)
             {
                 return Content("FAILED");
             }
@@ -128,6 +139,38 @@ namespace WebApplication1.Controllers
         {
             ViewBag.Code = code;
             return View();
+        }
+
+
+        [HttpGet]
+        public IActionResult About()
+        {
+            var model = new BillQueryViewModel
+            {
+                billDate = DateTime.Now.ToString("yyyy-MM-dd"),
+                billNo = string.Empty,
+                requestTimestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> About(BillQueryViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var req = new BillQueryRequest()
+            {
+                billDate = model.billDate,
+                billNo = model.billNo,
+                requestTimestamp = model.requestTimestamp
+            };
+            var res = await _client.ExecuteAsync(req);
+
+            return Ok(res);
         }
     }
 }

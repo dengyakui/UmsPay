@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "About";
+}
+@model BillQueryViewModel
+<h2>二维码支付</h2>
+<form method="post" asp-action="About" enctype="application/x-www-form-urlencoded">
+    <div class="form-group">
+        <label asp-for="billNo"></label>
+        <input asp-for="billNo" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="billDate"></label>
+        <input asp-for="billDate" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="requestTimestamp"></label>
+        <input asp-for="requestTimestamp" class="form-control" />
+    </div>
+
+    <div>
+        <button class="btn btn-primary">账单查询</button>
+    </div>
+</form>

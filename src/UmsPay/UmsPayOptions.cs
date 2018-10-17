@@ -18,11 +18,6 @@ namespace UmsPay
         public string msgSrcId { get; set; }
 
         /// <summary>
-        /// 消息类型
-        /// </summary>
-        public string msgType { get; set; }
-
-        /// <summary>
         /// 商户号
         /// </summary>
         public string mid { get; set; }

@@ -46,6 +46,8 @@ namespace UmsPay.Request
         /// </summary>
         public string returnUrl { get; set; }
 
+        public string msgType => "bills.getQRCode";
+
         public IDictionary<string, string> GetParameters()
         {
             var parameters = new UmsPayDictionary
@@ -57,7 +59,50 @@ namespace UmsPay.Request
                 {"totalAmount",totalAmount },
                 {"notifyUrl",notifyUrl},
                 {"returnUrl",returnUrl },
+                {"msgType", msgType},
 
+            };
+            return parameters;
+        }
+    }
+
+
+    /// <summary>
+    /// 获取二维码请求
+    /// </summary>
+    public class BillQueryRequest : IUmsPayRequest<BillQueryResponse>
+    {
+        /// <summary>
+        /// 消息ID
+        /// </summary>
+        public string msgId { get; set; }
+
+        /// <summary>
+        /// 报文请求时间，格式yyyy-MM-dd HH:mm:ss
+        /// </summary>
+        public string requestTimestamp { get; set; }
+
+        /// <summary>
+        /// 账单号
+        /// </summary>
+        public string billNo { get; set; }
+
+        /// <summary>
+        /// 账单日期，格式yyyy-MM-dd
+        /// </summary>
+        public string billDate { get; set; }
+
+
+        public string msgType => "bills.query";
+
+        public IDictionary<string, string> GetParameters()
+        {
+            var parameters = new UmsPayDictionary
+            {
+                {"msgType", msgType},
+                {"requestTimestamp",requestTimestamp },
+                {"billNo",billNo },
+                {"billDate",billDate },
             };
             return parameters;
         }
