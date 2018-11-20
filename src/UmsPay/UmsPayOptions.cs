@@ -7,6 +7,8 @@ namespace UmsPay
     public class UmsPayOptions
     {
         public const string DefaultClientName = "Payment.Ums.Client";
+
+
         /// <summary>
         /// 消息来源
         /// </summary>
