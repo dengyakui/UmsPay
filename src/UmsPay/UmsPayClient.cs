@@ -25,12 +25,12 @@ namespace UmsPay
         {
             var txtParams = new UmsPayDictionary(request.GetParameters())
             {
-                { "mid", _options.mid},
-                { "instMid", _options.instMid},
-                { "msgSrc", _options.msgSrc},
-                { "tid", _options.tid }
+                { "mid", _options.Mid},
+                { "instMid", _options.InstMid},
+                { "msgSrc", _options.MsgSrc},
+                { "tid", _options.Tid }
             };
-            UmsSignature.Sign(txtParams, _options.secretKey);
+            UmsSignature.Sign(txtParams, _options.SecretKey);
             using (var client = _httpClientFactory.CreateClient(UmsPayOptions.DefaultClientName))
             {
                 var content = JsonConvert.SerializeObject(txtParams);

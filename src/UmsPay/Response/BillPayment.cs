@@ -8,73 +8,73 @@
         /// <summary>
         /// 支付时间，格式yyyy-MM-dd HH:mm:ss
         /// </summary>
-        public string payTime { get; set; }
+        public string PayTime { get; set; }
 
         /// <summary>
         /// 交易参考号
         /// </summary>
-        public string paySeqId { get; set; }
+        public string PaySeqId { get; set; }
 
         /// <summary>
         /// 开票金额
         /// </summary>
-        public int invoiceAmount { get; set; }
+        public int InvoiceAmount { get; set; }
 
         /// <summary>
         /// 结算时间，格式yyyy-MM-dd
         /// </summary>
-        public string settleDate { get; set; }
+        public string SettleDate { get; set; }
 
         /// <summary>
         /// 买家ID
         /// </summary>
-        public string buyerId { get; set; }
+        public string BuyerId { get; set; }
 
         /// <summary>
         /// 账单流水总金额
         /// </summary>
-        public int totalAmount { get; set; }
+        public int TotalAmount { get; set; }
 
         /// <summary>
         /// 钱包折扣金额
         /// </summary>
-        public int couponAmount { get; set; }
+        public int CouponAmount { get; set; }
 
         /// <summary>
         /// 账单业务类型
         /// </summary>
-        public string billBizType { get; set; }
+        public string BillBizType { get; set; }
 
 
         /// <summary>
         /// 实付金额
         /// </summary>
-        public int buyerPayAmount { get; set; }
+        public int BuyerPayAmount { get; set; }
 
         /// <summary>
         /// 目标平台单号
         /// </summary>
-        public string targetOrderId { get; set; }
+        public string TargetOrderId { get; set; }
 
         /// <summary>
         /// 支付详情
         /// </summary>
-        public string payDetail { get; set; }
+        public string PayDetail { get; set; }
 
         /// <summary>
         /// 商户订单号
         /// </summary>
-        public string merOrderId { get; set; }
+        public string MerOrderId { get; set; }
 
 
         /// <summary>
         /// 交易状态
         /// </summary>
-        public string status { get; set; }
+        public string Status { get; set; }
 
         /// <summary>
         /// 目标系统
         /// </summary>
-        public string targetSys { get; set; }
+        public string TargetSys { get; set; }
     }
 }

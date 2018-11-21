@@ -12,29 +12,29 @@ namespace UmsPay
         /// <summary>
         /// 消息来源
         /// </summary>
-        public string msgSrc { get; set; }
+        public string MsgSrc { get; set; }
 
         /// <summary>
         /// 来源编号
         /// </summary>
-        public string msgSrcId { get; set; }
+        public string MsgSrcId { get; set; }
 
         /// <summary>
         /// 商户号
         /// </summary>
-        public string mid { get; set; }
+        public string Mid { get; set; }
 
         /// <summary>
         /// 终端号
         /// </summary>
-        public string tid { get; set; }
+        public string Tid { get; set; }
 
         /// <summary>
         /// 业务类型
         /// </summary>
-        public string instMid { get; set; }
+        public string InstMid { get; set; }
 
-        public string secretKey { get; set; }
+        public string SecretKey { get; set; }
 
         public string GetQrCodeUrl { get; set; }
 

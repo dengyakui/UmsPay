@@ -58,7 +58,7 @@ namespace WebApplication1.Controllers
             }
 
             // sign validation
-            if (!UmsPay.Utility.UmsSignature.Validate(dict, sign, _options.secretKey))
+            if (!UmsPay.Utility.UmsSignature.Validate(dict, sign, _options.SecretKey))
             {
                 throw new Exception("签名校验失败");
             }
@@ -68,22 +68,22 @@ namespace WebApplication1.Controllers
             var str = JsonConvert.SerializeObject(dict);
             var payResult = JsonConvert.DeserializeObject<PayResultNotify>(str);
             payResult.Body = str;
-            payResult.billPaymentObj = JsonConvert.DeserializeObject<BillPayment>(billPayment);
+            payResult.BillPaymentObj = JsonConvert.DeserializeObject<BillPayment>(billPayment);
 
-            if (payResult.billStatus != BillStatus.PAID)
+            if (payResult.BillStatus != BillStatus.Paid)
             {
                 return Content("FAILED");
             }
 
             var billQuery = new BillQueryRequest
             {
-                billDate = payResult.billDate,
-                billNo = payResult.billNo,
-                requestTimestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                BillDate = payResult.BillDate,
+                BillNo = payResult.BillNo,
+                RequestTimestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
             };
 
             var res = await _client.ExecuteAsync(billQuery);
-            if (res.billStatus != BillStatus.PAID)
+            if (res.BillStatus != BillStatus.Paid)
             {
                 return Content("FAILED");
             }
@@ -100,7 +100,7 @@ namespace WebApplication1.Controllers
             {
                 totalAmount = "1",
                 billDate = DateTime.Now.ToString("yyyy-MM-dd"),
-                billNo = _options.msgSrcId + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "1234567890",
+                billNo = _options.MsgSrcId + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "1234567890",
                 billDesc = "测试",
                 requestTimestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                 notifyUrl = _options.NotifyUrl
@@ -118,20 +118,20 @@ namespace WebApplication1.Controllers
             }
             var req = new GetQrCodeRequest
             {
-                totalAmount = model.totalAmount,
-                billDate = model.billDate,
-                billDesc = model.billDesc,
-                billNo = model.billNo,
-                requestTimestamp = model.requestTimestamp,
-                notifyUrl = model.notifyUrl,
-                returnUrl = model.returnUrl
+                TotalAmount = model.totalAmount,
+                BillDate = model.billDate,
+                BillDesc = model.billDesc,
+                BillNo = model.billNo,
+                RequestTimestamp = model.requestTimestamp,
+                NotifyUrl = model.notifyUrl,
+                ReturnUrl = model.returnUrl
             };
             var res = await _client.ExecuteAsync(req);
-            if (string.IsNullOrWhiteSpace(res.errCode) && string.IsNullOrWhiteSpace(res.errMsg))
+            if (string.IsNullOrWhiteSpace(res.ErrCode) && string.IsNullOrWhiteSpace(res.ErrMsg))
             {
                 throw new Exception("请求失败:" + res.Body);
             }
-            return RedirectToAction(nameof(QrCode), new { code = res.billQRCode });
+            return RedirectToAction(nameof(QrCode), new { code = res.BillQrCode });
         }
 
         [HttpGet]
@@ -164,9 +164,9 @@ namespace WebApplication1.Controllers
 
             var req = new BillQueryRequest()
             {
-                billDate = model.billDate,
-                billNo = model.billNo,
-                requestTimestamp = model.requestTimestamp
+                BillDate = model.billDate,
+                BillNo = model.billNo,
+                RequestTimestamp = model.requestTimestamp
             };
             var res = await _client.ExecuteAsync(req);
 

@@ -14,52 +14,52 @@ namespace UmsPay.Request
         /// <summary>
         /// 报文请求时间，格式yyyy-MM-dd HH:mm:ss
         /// </summary>
-        public string requestTimestamp { get; set; }
+        public string RequestTimestamp { get; set; }
 
         /// <summary>
         /// 账单号
         /// </summary>
-        public string billNo { get; set; }
+        public string BillNo { get; set; }
 
         /// <summary>
         /// 账单日期，格式yyyy-MM-dd
         /// </summary>
-        public string billDate { get; set; }
+        public string BillDate { get; set; }
 
         /// <summary>
         /// 账单描述
         /// </summary>
-        public string billDesc { get; set; }
+        public string BillDesc { get; set; }
 
         /// <summary>
         /// 支付总金额
         /// </summary>
-        public string totalAmount { get; set; }
+        public string TotalAmount { get; set; }
 
         /// <summary>
         /// 支付结果通知地址
         /// </summary>
-        public string notifyUrl { get; set; }
+        public string NotifyUrl { get; set; }
 
         /// <summary>
         /// 网页跳转地址
         /// </summary>
-        public string returnUrl { get; set; }
+        public string ReturnUrl { get; set; }
 
-        public string msgType => "bills.getQRCode";
+        public string MsgType => "bills.getQRCode";
 
         public IDictionary<string, string> GetParameters()
         {
             var parameters = new UmsPayDictionary
             {
-                {"requestTimestamp",requestTimestamp },
-                {"billNo",billNo },
-                {"billDate",billDate },
-                {"billDesc",billDesc },
-                {"totalAmount",totalAmount },
-                {"notifyUrl",notifyUrl},
-                {"returnUrl",returnUrl },
-                {"msgType", msgType},
+                {"requestTimestamp",RequestTimestamp },
+                {"billNo",BillNo },
+                {"billDate",BillDate },
+                {"billDesc",BillDesc },
+                {"totalAmount",TotalAmount },
+                {"notifyUrl",NotifyUrl},
+                {"returnUrl",ReturnUrl },
+                {"msgType", MsgType},
 
             };
             return parameters;
@@ -75,34 +75,34 @@ namespace UmsPay.Request
         /// <summary>
         /// 消息ID
         /// </summary>
-        public string msgId { get; set; }
+        public string MsgId { get; set; }
 
         /// <summary>
         /// 报文请求时间，格式yyyy-MM-dd HH:mm:ss
         /// </summary>
-        public string requestTimestamp { get; set; }
+        public string RequestTimestamp { get; set; }
 
         /// <summary>
         /// 账单号
         /// </summary>
-        public string billNo { get; set; }
+        public string BillNo { get; set; }
 
         /// <summary>
         /// 账单日期，格式yyyy-MM-dd
         /// </summary>
-        public string billDate { get; set; }
+        public string BillDate { get; set; }
 
 
-        public string msgType => "bills.query";
+        public string MsgType => "bills.query";
 
         public IDictionary<string, string> GetParameters()
         {
             var parameters = new UmsPayDictionary
             {
-                {"msgType", msgType},
-                {"requestTimestamp",requestTimestamp },
-                {"billNo",billNo },
-                {"billDate",billDate },
+                {"msgType", MsgType},
+                {"requestTimestamp",RequestTimestamp },
+                {"billNo",BillNo },
+                {"billDate",BillDate },
             };
             return parameters;
         }

@@ -10,6 +10,6 @@ namespace UmsPay.Abstract
         /// </summary>
         IDictionary<string, string> GetParameters();
 
-        string msgType { get; }
+        string MsgType { get; }
     }
 }

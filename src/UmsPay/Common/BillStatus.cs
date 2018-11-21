@@ -8,27 +8,27 @@
         /// <summary>
         /// 已支付
         /// </summary>
-        public const string PAID = "PAID";
+        public const string Paid = "PAID";
 
         /// <summary>
         /// 未支付
         /// </summary>
-        public const string UNPAID = "UNPAID";
+        public const string Unpaid = "UNPAID";
 
         /// <summary>
         /// 已退款
         /// </summary>
-        public const string REFUND = "REFUND";
+        public const string Refund = "REFUND";
 
         /// <summary>
         /// 已关闭
         /// </summary>
-        public const string CLOSED = "CLOSED";
+        public const string Closed = "CLOSED";
 
         /// <summary>
         /// 未知
         /// </summary>
-        public const string UNKNOWN = "UNKNOWN";
+        public const string Unknown = "UNKNOWN";
 
     }
 }
